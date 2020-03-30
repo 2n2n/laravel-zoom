@@ -71,9 +71,9 @@ class User extends Model
     public function save()
     {
         if ($this->hasID()) {
-            if (in_array('put', $this->methods)) {
+            if (in_array('patch', $this->methods)) {
                 $this->response = $this->client->patch("{$this->getEndpoint()}/{$this->getID()}", $this->updateAttributes());
-                if ($this->response->getStatusCode() == '200') {
+                if ($this->response->getStatusCode() == '201') {
                     return $this;
                 } else {
                     throw new Exception($this->response->getStatusCode().' status code');
@@ -83,7 +83,7 @@ class User extends Model
             if (in_array('post', $this->methods)) {
                 $attributes = ['action' => 'create', 'user_info' => $this->createAttributes()];
                 $this->response = $this->client->post($this->getEndpoint(), $attributes);
-                if ($this->response->getStatusCode() == '200') {
+                if ($this->response->getStatusCode() == '201') {
                     $this->fill($this->response->getBody());
 
                     return $this;
@@ -96,7 +96,7 @@ class User extends Model
 
     public function meetings()
     {
-        $meeting = new \MacsiDigital\Zoom\Meeting;
+        $meeting = new \MacsiDigital\Zoom\Meeting();
         $meeting->setUserID($this->getID());
 
         return $meeting;
@@ -104,7 +104,7 @@ class User extends Model
 
     public function webinars()
     {
-        $webinar = new \MacsiDigital\Zoom\Webinar;
+        $webinar = new \MacsiDigital\Zoom\Webinar();
         $webinar->setUserID($this->getID());
 
         return $webinar;

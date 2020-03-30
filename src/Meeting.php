@@ -102,7 +102,7 @@ class Meeting extends Model
 
     public function make($attributes)
     {
-        $model = new static;
+        $model = new static();
         $model->fill($attributes);
         if (isset($this->userID)) {
             $model->setUserID($this->userID);
@@ -127,7 +127,7 @@ class Meeting extends Model
         }
     }
 
-    public function all()
+    public function all($fromPage = 1)
     {
         if ($this->userID != '') {
             if (in_array('get', $this->methods)) {
@@ -170,7 +170,7 @@ class Meeting extends Model
 
     public function registrants()
     {
-        $registrant = new \MacsiDigital\Zoom\Registrant;
+        $registrant = new \MacsiDigital\Zoom\Registrant();
         $registrant->setType('meetings');
         $registrant->setRelationshipID($this->getID());
 

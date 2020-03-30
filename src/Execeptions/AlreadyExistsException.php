@@ -2,7 +2,7 @@
 
 namespace MacsiDigital\Zoom\Exceptions;
 
-// Response code 400
+// Response code 409
 
 class AlreadyExistsException extends \Exception
 {

@@ -2,8 +2,8 @@
 
 namespace MacsiDigital\Zoom;
 
-use Exception;
 use MacsiDigital\Zoom\Support\Model;
+use MacsiDigital\Zoom\Exceptions\UserExceptionFactory;
 
 class User extends Model
 {
@@ -76,7 +76,7 @@ class User extends Model
                 if ($this->response->getStatusCode() == '201') {
                     return $this;
                 } else {
-                    throw new Exception($this->response->getStatusCode().' status code');
+                    UserExceptionFactory::generate($this->response);
                 }
             }
         } else {
@@ -88,7 +88,7 @@ class User extends Model
 
                     return $this;
                 } else {
-                    throw new Exception($this->response->getStatusCode().' status code');
+                    UserExceptionFactory::generate($this->response);
                 }
             }
         }
